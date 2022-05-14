@@ -12,10 +12,10 @@ class CreateOrJoinQuiz extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              "QUIZ LAN",
-              style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
-            ),
+            // const Text(
+            //   "QUIZ LAN",
+            //   style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+            // ),
             Image.asset("assets/images/Internet Day.gif", height: 300),
             Button(
               onPressed: () {

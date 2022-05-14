@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:untitled/constans.dart';
+import 'package:untitled/module/room.dart';
+
 class RoomCrtl {
   static String generatePassword() {
     String s = "";
@@ -9,5 +12,14 @@ class RoomCrtl {
       s += "$a";
     }
     return s;
+  }
+
+  static Room findRoom(String name) {
+    return rooms.firstWhere((element) => element.name == name,
+        orElse: () => Room(id: -1));
+  }
+
+  static bool hasCorrectInformations(String name, String password) {
+    return findRoom(name).password == password && password.isNotEmpty;
   }
 }
