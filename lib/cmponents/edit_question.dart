@@ -80,6 +80,7 @@ class _EditQuestionState extends State<EditQuestion> {
                         if (choicesNumber > 0) {
                           setState(() {
                             choicesNumber--;
+                            widget.question!.choices!.removeLast();
                           });
                         }
                       },
@@ -117,8 +118,6 @@ class _EditQuestionState extends State<EditQuestion> {
                       );
                     },
                     physics: const NeverScrollableScrollPhysics(),
-                    keyboardDismissBehavior:
-                        ScrollViewKeyboardDismissBehavior.onDrag,
                     itemCount: choicesNumber),
               ),
             ],

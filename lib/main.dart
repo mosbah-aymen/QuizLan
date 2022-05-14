@@ -15,7 +15,7 @@ void main() {
       initialRoute: '/',
       routes: {
         '/': (context) => const Home(),
-        const AnsweringRoom().id: (context) => const AnsweringRoom(),
+        AnsweringRoom().id: (context) => AnsweringRoom(),
         AddQuestions().id: (context) => AddQuestions(),
       },
     ));

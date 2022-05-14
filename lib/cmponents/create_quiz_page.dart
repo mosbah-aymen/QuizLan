@@ -20,7 +20,9 @@ class CreateQuiz extends StatelessWidget {
               style: TextStyle(fontSize: 34),
             ),
             TextField(
-              onChanged: (s) {},
+              onChanged: (s) {
+                name = s;
+              },
               style: const TextStyle(fontSize: 24),
               textAlign: TextAlign.center,
               decoration: InputDecoration(

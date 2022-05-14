@@ -20,6 +20,7 @@ class _AddQuestionsState extends State<AddQuestions> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.room!.name ?? ""),
+        centerTitle: true,
       ),
       bottomSheet: BottomSheet(
         enableDrag: false,
@@ -36,11 +37,12 @@ class _AddQuestionsState extends State<AddQuestions> {
                   child: Button(
                       onPressed: () {
                         setState(() {
+                          widget.room!.questions = questionList;
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => ConfirmAndCreate(
-                                questions: questionList,
+                                room: widget.room,
                               ),
                             ),
                           );
@@ -59,9 +61,6 @@ class _AddQuestionsState extends State<AddQuestions> {
                         setState(() {
                           questionList.add(Question(choices: [""]));
                         });
-                        // _controller.animateTo(num + 1,
-                        //     duration: const Duration(milliseconds: 1000),
-                        //     curve: Curves.ease);
                       },
                       icon: Icons.navigate_next_sharp,
                       color: Colors.green,
@@ -76,7 +75,7 @@ class _AddQuestionsState extends State<AddQuestions> {
       body: ListView.builder(
         itemBuilder: (context, i) => EditQuestion(question: questionList[i]),
         itemCount: questionList.length,
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
         padding: const EdgeInsets.only(bottom: 50),
       ),
       // body: PageView(
