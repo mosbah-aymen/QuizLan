@@ -8,6 +8,9 @@ export 'package:untitled/cmponents/join_quiz_page.dart';
 export 'package:untitled/cmponents/question_in_room.dart';
 export 'package:untitled/module/question.dart';
 export 'package:untitled/view/confirm_create.dart';
+export 'package:untitled/view/login/create.dart';
+export 'package:untitled/view/login/logon.dart';
+export 'package:untitled/view/splash.dart';
 
 export 'constans.dart';
 export 'main.dart';

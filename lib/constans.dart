@@ -6,6 +6,9 @@ import 'impots.dart';
 List<Widget> pages = [CreateQuiz(), CreateOrJoinQuiz(), JoinQuiz()];
 PageController controller = PageController(initialPage: 1);
 
-User thisUser = User(name: 'mosbah', email: "mosbah@gmail.com", id: 123);
+User thisUser = User(name: '', email: "", id: 1);
 
+List<User> users = [
+  User(name: 'a', email: "a@gmail.com", password: 'a', id: 2, rooms: []),
+];
 List<Room> rooms = [];

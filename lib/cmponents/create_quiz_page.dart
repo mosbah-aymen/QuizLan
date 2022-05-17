@@ -33,7 +33,7 @@ class CreateQuiz extends StatelessWidget {
             Button(
               onPressed: () {
                 Room room = Room(
-                    id: 1,
+//                    id: 1,
                     name: name,
                     creator: thisUser,
                     password: RoomCrtl.generatePassword(),

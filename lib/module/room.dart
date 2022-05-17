@@ -10,7 +10,7 @@ class Room {
   List<User>? users = [];
 
   Room(
-      {required this.id,
+      {this.id,
       this.name,
       this.password,
       this.creator,

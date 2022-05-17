@@ -24,9 +24,9 @@ class ConfirmAndCreate extends StatelessWidget {
               children: [
                 Button(
                     onPressed: () {
-                      rooms.add(room!);
+                      thisUser.rooms!.add(room!);
                       Navigator.popUntil(context, (route) => route.isFirst);
-                      Navigator.popAndPushNamed(context, '/');
+                      Navigator.popAndPushNamed(context, 'home');
                     },
                     icon: Icons.navigate_next_sharp,
                     color: Colors.green,
