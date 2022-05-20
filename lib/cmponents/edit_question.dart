@@ -11,6 +11,16 @@ class EditQuestion extends StatefulWidget {
 class _EditQuestionState extends State<EditQuestion> {
   int choicesNumber = 1;
   int selected = -1;
+
+  TextEditingController contentController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    contentController = TextEditingController(text: widget.question!.content);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -24,9 +34,9 @@ class _EditQuestionState extends State<EditQuestion> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
+                controller: contentController,
                 onChanged: (s) {
                   widget.question!.content = s;
-                  print(widget.question!.content);
                 },
                 decoration: InputDecoration(
                     label: Text("Question"),

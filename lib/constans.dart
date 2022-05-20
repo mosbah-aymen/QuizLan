@@ -3,7 +3,7 @@ import 'package:untitled/module/user.dart';
 
 import 'impots.dart';
 
-List<Widget> pages = [CreateQuiz(), CreateOrJoinQuiz(), JoinQuiz()];
+List<Widget> pages = [CreateQuiz(), JoinQuiz(), Profile()];
 PageController controller = PageController(initialPage: 1);
 
 User thisUser = User(name: '', email: "", id: 1);

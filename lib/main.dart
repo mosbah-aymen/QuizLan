@@ -12,7 +12,7 @@ void main() {
     runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColorLight: Colors.teal,
+        appBarTheme: AppBarTheme(color: Colors.indigo),
         // fontFamily: 'Cinzel',
       ),
       initialRoute: '/',

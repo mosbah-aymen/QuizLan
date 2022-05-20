@@ -76,6 +76,7 @@ class SignIn extends StatelessWidget {
                   child: const Text('Login'),
                   onPressed: () async {
                     await login();
+                    controller = PageController(initialPage: 1);
                     Navigator.popAndPushNamed(context, 'home');
                   },
                 )),

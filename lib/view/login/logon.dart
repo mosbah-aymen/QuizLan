@@ -78,6 +78,7 @@ class LogOn extends StatelessWidget {
                       final SharedPreferences prefs = await _pref;
                       await prefs.setStringList(
                           'thisUser', <String>[name, user.email!, pass]);
+                      controller = PageController(initialPage: 1);
                       Navigator.popAndPushNamed(context, 'home');
                     } else {
                       showDialog(

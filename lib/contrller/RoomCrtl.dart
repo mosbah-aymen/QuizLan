@@ -15,11 +15,25 @@ class RoomCrtl {
   }
 
   static Room findRoom(String name) {
-    return rooms.firstWhere((element) => element.name == name,
-        orElse: () => Room(id: -1));
+    int i = 0;
+    Room room = Room();
+    if (rooms.isNotEmpty) {
+      rooms.forEach((element) {
+        print(element.name);
+        if (element.name == name) {
+          room = element;
+          print("found");
+          return;
+        }
+      });
+    } else {
+      print("no rooms");
+    }
+    return room;
   }
 
   static bool hasCorrectInformations(String name, String password) {
+    print(findRoom(name).password);
     return findRoom(name).password == password && password.isNotEmpty;
   }
 }

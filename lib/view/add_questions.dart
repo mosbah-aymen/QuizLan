@@ -38,7 +38,6 @@ class _AddQuestionsState extends State<AddQuestions> {
                       onPressed: () {
                         setState(() {
                           widget.room!.questions = questionList;
-                          print(widget.room!.questions!.first.content);
                           Navigator.push(
                             context,
                             MaterialPageRoute(

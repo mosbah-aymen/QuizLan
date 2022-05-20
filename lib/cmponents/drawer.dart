@@ -13,7 +13,7 @@ class MyDrawer extends StatelessWidget {
             padding: const EdgeInsets.all(0),
             child: Container(
               width: double.infinity,
-              color: Colors.blue,
+              color: Colors.indigo,
               padding: const EdgeInsets.all(8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -21,10 +21,10 @@ class MyDrawer extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundColor: Colors.indigo,
+                    backgroundColor: Colors.white,
                     child: Text(
                       thisUser.name![0].toUpperCase(),
-                      style: const TextStyle(fontSize: 45, color: Colors.white),
+                      style: const TextStyle(fontSize: 45, color: Colors.black),
                     ),
                   ),
                   ListTile(
