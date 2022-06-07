@@ -2,7 +2,8 @@ import 'package:untitled/impots.dart';
 
 class ViewedQuestion extends StatelessWidget {
   Question? question;
-  ViewedQuestion({Key? key, this.question}) : super(key: key);
+  List<int>? answered;
+  ViewedQuestion({Key? key, this.question, this.answered}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,43 +28,50 @@ class ViewedQuestion extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     )),
               ),
-              // SizedBox(
-              //   height: 50,
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Icon(
-              //         Icons.image,
-              //         color: Colors.blue,
-              //       ),
-              //       Text(
-              //         "Add Image",
-              //         style: TextStyle(color: Colors.blue),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               SizedBox(
                 height: 70.0 * question!.choices!.length,
                 child: ListView.builder(
                     itemBuilder: (context, i) {
+                      int answ = i < answered!.length ? answered![i] : -2;
+                      //answered != null ? answ = answered![i] : answ = -2;
                       return question == null
-                          ? Text('no question')
+                          ? const Text('no question')
                           : ListTile(
                               leading: Icon(
                                   question!.correctChoice == i
                                       ? Icons.check_box
-                                      : Icons.check_box_outline_blank,
-                                  color: Colors.green),
-                              title: TextField(
-                                decoration: InputDecoration(
-                                    enabled: false,
-                                    hintText: question!.choices![i],
-                                    hintStyle: const TextStyle(
-                                        color: Colors.black, fontSize: 16),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    )),
+                                      : answ == i
+                                          ? Icons
+                                              .indeterminate_check_box_rounded
+                                          : Icons.check_box_outline_blank,
+                                  color: question!.correctChoice == i
+                                      ? Colors.green
+                                      : answ == i
+                                          ? Colors.red
+                                          : Colors.indigo),
+                              title: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        width: question!.correctChoice == i ||
+                                                answ == i
+                                            ? 1
+                                            : 0,
+                                        color: question!.correctChoice == i
+                                            ? Colors.green
+                                            : answ == i
+                                                ? Colors.red
+                                                : Colors.indigo)),
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                      enabled: false,
+                                      hintText: question!.choices![i],
+                                      hintStyle: const TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                ),
                               ),
                             );
                     },

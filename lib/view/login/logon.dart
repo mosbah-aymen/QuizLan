@@ -1,7 +1,5 @@
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled/contrller/userCrtl.dart';
+import 'package:untitled/contrller/sharedPref.dart';
 import 'package:untitled/impots.dart';
-import 'package:untitled/module/user.dart';
 
 class LogOn extends StatelessWidget {
   LogOn({Key? key}) : super(key: key);
@@ -22,7 +20,7 @@ class LogOn extends StatelessWidget {
                 child: const Text(
                   'QuizLan',
                   style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.indigo,
                       fontWeight: FontWeight.w500,
                       fontSize: 30),
                 )),
@@ -70,21 +68,23 @@ class LogOn extends StatelessWidget {
                   onPressed: () async {
                     String name = nameController.text;
                     String pass = passwordController.text;
-                    User? user = UserCrtl.confirmPassAndGetUser(name, pass);
-                    if (user!.id != -1) {
+                    waiting(context);
+                    User? user =
+                        await UserCrtl.confirmPassAndGetUser(name, pass);
+                    if (user != null) {
                       thisUser = user;
-                      final Future<SharedPreferences> _pref =
-                          SharedPreferences.getInstance();
-                      final SharedPreferences prefs = await _pref;
-                      await prefs.setStringList(
-                          'thisUser', <String>[name, user.email!, pass]);
+                      Pref.saveUserId(thisUser.id!);
                       controller = PageController(initialPage: 1);
+                      Navigator.pop(context);
                       Navigator.popAndPushNamed(context, 'home');
                     } else {
+                      Navigator.pop(context);
                       showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                                title: const Text("Wrong Password"),
+                                title: const Text("Wrong Email or Password"),
+                                content: const Text(
+                                    "Please verify your informations before you try login again."),
                                 actions: [
                                   TextButton(
                                       onPressed: () {

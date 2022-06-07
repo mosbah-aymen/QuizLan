@@ -1,16 +1,19 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled/contrller/resultCrtl.dart';
+import 'package:untitled/contrller/sharedPref.dart';
 import 'package:untitled/impots.dart';
-import 'package:untitled/module/user.dart';
 
 class Splash extends StatelessWidget {
   Splash({Key? key}) : super(key: key);
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   Future<Widget> loadFromFuture() async {
-    // <fetch data from server. ex. login>
-    final SharedPreferences prefs = await _prefs;
-    List<String>? tUser = await prefs.getStringList("thisUser");
-    if (tUser != null) thisUser = User(name: tUser[0], email: tUser[1]);
-    return Future.value(tUser != null ? const Home() : SignIn());
+    String? tUserID = await Pref.getUserID();
+    if (tUserID != null && tUserID != "") {
+      thisUser = await UserCrtl.getUserFromDBbyID(tUserID);
+      thisUser.results = await ResultCrtl.getAllResultsOfThisUser();
+    }
+
+    return Future.value(
+        (tUserID != null && tUserID != "") ? const Home() : SignIn());
   }
 
   @override

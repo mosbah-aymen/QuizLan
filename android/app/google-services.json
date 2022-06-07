@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1021620842604",
+    "firebase_url": "https://quizwan-f16db-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "quizwan-f16db",
+    "storage_bucket": "quizwan-f16db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1021620842604:android:56d06a2a3fe141b1ab2849",
+        "android_client_info": {
+          "package_name": "com.example.untitled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1021620842604-jhjnuaajpufigqbj8kfq0n53iaglcqn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSnQoe_rx2QCHmUOQXSfQrIDbZephvF00"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021620842604-jhjnuaajpufigqbj8kfq0n53iaglcqn0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

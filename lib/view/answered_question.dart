@@ -2,7 +2,9 @@ import 'package:untitled/impots.dart';
 
 class AnsweredQuestion extends StatefulWidget {
   final Question question;
-  const AnsweredQuestion({Key? key, required this.question}) : super(key: key);
+  ValueChanged<int>? getResult;
+  AnsweredQuestion({Key? key, required this.question, this.getResult})
+      : super(key: key);
 
   @override
   State<AnsweredQuestion> createState() => _AnsweredQuestionState();
@@ -14,6 +16,7 @@ class _AnsweredQuestionState extends State<AnsweredQuestion> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 1,
       margin: const EdgeInsets.all(10),
       child: SingleChildScrollView(
         child: Padding(
@@ -34,22 +37,11 @@ class _AnsweredQuestionState extends State<AnsweredQuestion> {
                       borderRadius: BorderRadius.circular(10),
                     )),
               ),
-              // SizedBox(
-              //   height: 50,
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Icon(
-              //         Icons.image,
-              //         color: Colors.blue,
-              //       ),
-              //       Text(
-              //         "Add Image",
-              //         style: TextStyle(color: Colors.blue),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+              Divider(
+                height: 50,
+                thickness: 1,
+                color: Colors.indigo,
+              ),
               SizedBox(
                 height: 70.0 * widget.question.choices!.length,
                 child: ListView.builder(
@@ -66,6 +58,7 @@ class _AnsweredQuestionState extends State<AnsweredQuestion> {
                                   onPressed: () {
                                     setState(() {
                                       selected = i;
+                                          widget.getResult!(selected);
                                     });
                                   }),
                               title: TextField(

@@ -1,6 +1,5 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled/contrller/sharedPref.dart';
 import 'package:untitled/impots.dart';
-import 'package:untitled/module/user.dart';
 
 class SignIn extends StatelessWidget {
   SignIn({Key? key}) : super(key: key);
@@ -11,6 +10,7 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
@@ -19,12 +19,33 @@ class SignIn extends StatelessWidget {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  'QuizLAN',
+                  'QuizWAN',
                   style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.indigo,
                       fontWeight: FontWeight.w500,
-                      fontSize: 30),
+                      fontSize: 36,
+                      shadows: [
+                        BoxShadow(
+                          color: Colors.blue,
+                          blurRadius: 7,
+                          offset: Offset(1, 2),
+                        ),
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 7,
+                          offset: Offset(-1, 1),
+                        ),
+                      ]),
                 )),
+            // Hero(
+            //   tag: 'logo',
+            //   child: SizedBox(
+            //     child: Image.asset(
+            //       "assets/images/QuizWAN.png",
+            //       height: 150,
+            //     ),
+            //   ),
+            // ),
             Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
@@ -37,7 +58,11 @@ class SignIn extends StatelessWidget {
                 )),
             Container(
               padding: const EdgeInsets.all(10),
-              child: TextField(
+              child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (v) => v!.isEmpty || !MyValidator.name(v)
+                    ? "please do not forget your name"
+                    : null,
                 controller: nameController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -47,8 +72,14 @@ class SignIn extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.all(10),
-              child: TextField(
+              child: TextFormField(
                 controller: emailController,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (v) => v!.isEmpty
+                    ? "please do not forget your email"
+                    : !MyValidator.email(v)
+                        ? "Please enter a valid email"
+                        : null,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
@@ -57,7 +88,13 @@ class SignIn extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              child: TextField(
+              child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (v) => v!.isEmpty
+                    ? "Please enter a powerful password"
+                    : !MyValidator.password(v) || v.length < 8
+                        ? "your password is weak"
+                        : null,
                 obscureText: true,
                 controller: passwordController,
                 decoration: const InputDecoration(
@@ -75,9 +112,9 @@ class SignIn extends StatelessWidget {
                 child: ElevatedButton(
                   child: const Text('Login'),
                   onPressed: () async {
-                    await login();
-                    controller = PageController(initialPage: 1);
-                    Navigator.popAndPushNamed(context, 'home');
+                    waiting(context);
+
+                    await login(context);
                   },
                 )),
             Row(
@@ -85,13 +122,13 @@ class SignIn extends StatelessWidget {
                 const Text('Have an account?'),
                 TextButton(
                   child: const Text(
-                    'Log in',
+                    'Sign in',
                     style: TextStyle(fontSize: 20),
                   ),
                   onPressed: () {
                     Navigator.popAndPushNamed(context, 'Login');
                   },
-                )
+                ),
               ],
               mainAxisAlignment: MainAxisAlignment.center,
             ),
@@ -101,15 +138,52 @@ class SignIn extends StatelessWidget {
     );
   }
 
-  Future login() async {
+  bool eveyThingIsValid() {
+    return MyValidator.name(nameController.text) &&
+        MyValidator.email(emailController.text) &&
+        MyValidator.password(passwordController.text);
+  }
+
+  void showAlert(context, String title, String subtitle) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text(title),
+              content: Text(subtitle),
+            ));
+  }
+
+  Future login(context) async {
     String name = nameController.text;
     String email = emailController.text;
     String password = passwordController.text;
-    thisUser =
-        User(id: 1, email: email, name: name, password: password, rooms: []);
-    final Future<SharedPreferences> _pref = SharedPreferences.getInstance();
-    final SharedPreferences prefs = await _pref;
-    await prefs.setStringList('thisUser', <String>[name, email, password]);
-    users.add(thisUser);
+    if (!MyValidator.name(name)) {
+      Navigator.pop(context);
+      showAlert(context, "Wrong Name",
+          'you have entered a wrong name .Please verify and try again');
+    } else if (!MyValidator.email(email)) {
+      Navigator.pop(context);
+      showAlert(context, "Wrong email",
+          'you have entered a wrong email .Please verify and try again');
+    } else if (!MyValidator.password(password) || password.length < 8) {
+      Navigator.pop(context);
+      showAlert(context, "Wrong password",
+          'It must be 8 characteres and alphaNumeric. Please verify and try again');
+    } else {
+      String? id =
+          await UserCrtl.getUserByEmailOrName(email).then((value) => value.id);
+      Navigator.pop(context);
+      if (id != null) {
+        showAlert(context, "Used Email", usedEmail);
+      } else {
+        id = await UserCrtl.postUserAndGetID(name, email, password);
+        thisUser = User(
+            id: id, email: email, name: name, password: password, rooms: []);
+        Pref.saveUserId(thisUser.id!);
+        controller = PageController(initialPage: 1);
+        Navigator.pop(context);
+        Navigator.popAndPushNamed(context, 'home');
+      }
+    }
   }
 }

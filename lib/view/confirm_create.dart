@@ -1,6 +1,4 @@
-import 'package:untitled/cmponents/viewed_question.dart';
 import 'package:untitled/impots.dart';
-import 'package:untitled/module/room.dart';
 
 class ConfirmAndCreate extends StatelessWidget {
   Room? room;
@@ -23,12 +21,13 @@ class ConfirmAndCreate extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Button(
-                    onPressed: () {
+                    onPressed: () async {
                       if (thisUser.rooms == null) {
                         thisUser.rooms = [];
                       }
-                      thisUser.rooms!.add(room!);
-                      rooms.add(room!);
+                      String id = await RoomCrtl.createNewRoomAndGetId(
+                          room!.name!, room!.questions!);
+
                       Navigator.popUntil(context, (route) => route.isFirst);
                       Navigator.popAndPushNamed(context, 'home');
                     },

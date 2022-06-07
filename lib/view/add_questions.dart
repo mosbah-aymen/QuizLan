@@ -1,5 +1,4 @@
 import 'package:untitled/impots.dart';
-import 'package:untitled/module/room.dart';
 
 class AddQuestions extends StatefulWidget {
   String get id => "addQuestions";
@@ -25,17 +24,17 @@ class _AddQuestionsState extends State<AddQuestions> {
       bottomSheet: BottomSheet(
         enableDrag: false,
         builder: (context) => SizedBox(
-          height: 80,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Button(
-                      onPressed: () {
+          height: 60,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Button(
+                    onPressed: () {
+                      int missing = missingFields(questionList);
+                      if (missing == 0) {
                         setState(() {
                           widget.room!.questions = questionList;
                           Navigator.push(
@@ -47,45 +46,49 @@ class _AddQuestionsState extends State<AddQuestions> {
                             ),
                           );
                         });
-                        // _controller.animateTo(num + 1,
-                        //     duration: const Duration(milliseconds: 1000),
-                        //     curve: Curves.ease);
-                      },
-                      icon: Icons.add_circle_outline,
-                      color: Colors.green,
-                      text: 'Next'),
-                ),
-                Expanded(
-                  child: Button(
-                      onPressed: () {
-                        setState(() {
-                          questionList.add(Question(choices: [""]));
-                        });
-                      },
-                      icon: Icons.navigate_next_sharp,
-                      color: Colors.green,
-                      text: 'Add Question'),
-                ),
-              ],
-            ),
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(
+                              "You have missed $missing field",
+                              style: TextStyle(fontSize: 18),
+                            )));
+                      }
+                      // _controller.animateTo(num + 1,
+                      //     duration: const Duration(milliseconds: 1000),
+                      //     curve: Curves.ease);
+                    },
+                    icon: Icons.navigate_next_sharp,
+                    color: Colors.indigo,
+                    text: 'Next'),
+              ),
+              Expanded(
+                child: Button(
+                    onPressed: () {
+                      setState(() {
+                        questionList.add(Question(choices: [""]));
+                      });
+                    },
+                    icon: Icons.add_circle_outline,
+                    color: Colors.green,
+                    text: 'Add Question'),
+              ),
+            ],
           ),
         ),
         onClosing: () {},
       ),
       body: ListView.builder(
-        itemBuilder: (context, i) => EditQuestion(question: questionList[i]),
+        itemBuilder: (context, i) => Stack(
+          alignment: Alignment.topRight,
+          children: [
+            EditQuestion(question: questionList[i]),
+          ],
+        ),
         itemCount: questionList.length,
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
         padding: const EdgeInsets.only(bottom: 50),
       ),
-      // body: PageView(
-      //   children: QuestionListWidget,
-      //   onPageChanged: (a) {
-      //     setState(() {
-      //       num = a;
-      //     });
-      //   },
-      // ),
     );
   }
 }

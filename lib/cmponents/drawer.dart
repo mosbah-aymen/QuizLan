@@ -1,4 +1,3 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:untitled/impots.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -7,6 +6,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Colors.white,
       child: Column(
         children: [
           DrawerHeader(
@@ -14,17 +14,17 @@ class MyDrawer extends StatelessWidget {
             child: Container(
               width: double.infinity,
               color: Colors.indigo,
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.white,
+                    radius: 30,
+                    backgroundColor: Colors.green,
                     child: Text(
                       thisUser.name![0].toUpperCase(),
-                      style: const TextStyle(fontSize: 45, color: Colors.black),
+                      style: const TextStyle(fontSize: 38, color: Colors.white),
                     ),
                   ),
                   ListTile(
@@ -32,13 +32,15 @@ class MyDrawer extends StatelessWidget {
                       // user screen
                     },
                     title: Text(
-                      thisUser.email!,
+                      thisUser.name!,
                       style: const TextStyle(fontSize: 16, color: Colors.white),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 20,
+                    subtitle: Text(
+                      thisUser.email!,
+                      style:
+                          const TextStyle(fontSize: 16, color: Colors.white70),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
@@ -53,7 +55,12 @@ class MyDrawer extends StatelessWidget {
             title: const Text(
               "Setings",
             ),
-            onTap: () {},
+            onTap: () async {
+              // thisUser.rooms = await UserCrtl.getRoomsOfUser([
+              //   "gGC2tD0Q9oGJdEPYwJJH",
+              //   "Q7rwvXt9m05cl6sWXoQ4",
+              // ]);
+            },
             trailing: const Icon(
               Icons.arrow_forward_ios,
             ),
@@ -64,15 +71,6 @@ class MyDrawer extends StatelessWidget {
               color: Colors.indigo,
             ),
             title: const Text("Rate-us"),
-            onTap: () {},
-            trailing: const Icon(Icons.arrow_forward_ios),
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.share,
-              color: Colors.indigo,
-            ),
-            title: const Text("Share"),
             onTap: () {},
             trailing: const Icon(Icons.arrow_forward_ios),
           ),
@@ -94,6 +92,11 @@ class MyDrawer extends StatelessWidget {
             onTap: () {},
             trailing: const Icon(Icons.arrow_forward_ios),
           ),
+          Divider(
+            thickness: 1,
+            color: Colors.indigo,
+            height: 20,
+          ),
           ListTile(
             leading: const Icon(
               Icons.logout,
@@ -104,11 +107,15 @@ class MyDrawer extends StatelessWidget {
               final Future<SharedPreferences> _prefs =
                   SharedPreferences.getInstance();
               final SharedPreferences prefs = await _prefs;
-              final success = await prefs.remove('thisUser');
-              if (success) Navigator.popAndPushNamed(context, '/');
+              final success = await prefs.remove('thisUserID');
+              if (success) {
+                Navigator.popUntil(context, (route) => route.isFirst);
+                Navigator.popAndPushNamed(context, '/');
+              }
             },
             trailing: const Icon(Icons.arrow_forward_ios),
           ),
+          Image.asset("assets/images/QuizWAN.png"),
         ],
       ),
     );
