@@ -32,7 +32,11 @@ class ViewedQuestion extends StatelessWidget {
                 height: 70.0 * question!.choices!.length,
                 child: ListView.builder(
                     itemBuilder: (context, i) {
-                      int answ = i < answered!.length ? answered![i] : -2;
+                      int answ = answered != null
+                          ? i < answered!.length
+                              ? answered![i]
+                              : -2
+                          : -2;
                       //answered != null ? answ = answered![i] : answ = -2;
                       return question == null
                           ? const Text('no question')

@@ -83,6 +83,22 @@ class _AddQuestionsState extends State<AddQuestions> {
           alignment: Alignment.topRight,
           children: [
             EditQuestion(question: questionList[i]),
+            // IconButton(
+            //   onPressed: () {
+            //     if (questionList.length > 1) {
+            //       questionList.removeAt(i);
+            //       widget.room!.questions = questionList;
+            //       setState(() {});
+            //     } else {
+            //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            //         content:
+            //             Text("Please, let at least 1 question in the room"),
+            //         backgroundColor: Colors.indigo,
+            //       ));
+            //     }
+            //   },
+            //   icon: const Icon(Icons.highlight_remove_outlined),
+            // ),
           ],
         ),
         itemCount: questionList.length,

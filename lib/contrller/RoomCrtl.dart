@@ -48,7 +48,7 @@ class RoomCrtl {
       "name": name,
       "password": generatePassword(),
       'users': [],
-      'creator': thisUser.id,
+      'creator': thisUser.name,
       'questions': QuestionCrtl.getMapFromQuestions(questions),
       "created on": DateTime.now().toString(),
     });
@@ -56,7 +56,6 @@ class RoomCrtl {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     List<String> newRefOfRooms = getAllIDOfRoomThisUser();
     users.doc(thisUser.id).update({'rooms': newRefOfRooms});
-
     return a.id;
   }
 
